@@ -1,5 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  background: url("..//resources/hero_img.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: contain;
+  background-color: #040711;
+  color: #f9fafb;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 8% 0;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+section {
+  width: 550px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #121826cc;
+  padding: 20px;
+  margin-block: 40px;
+  border: 1px solid #4d5562;
+  border-radius: 16px;
+}
+
+section > div:first-of-type {
+  width: 100%;
+  color: #d2d5da;
+  padding: 10px 10px 20px;
+}
+
+section > hr {
+  width: 100%;
+  height: 0.5px;
+  background-color: #4d5562;
+  border: none;
+}
+
+form {
+  width: 100%;
+}
+
+section > form textarea {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #f9fafb;
+  padding-block: 20px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+section > p {
+  align-self: flex-end;
+  font-size: 0.75rem;
+  font-weight: normal;
+  color: #d2d5da;
+  margin-block: 10px;
+}
+
+section > div:last-of-type {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+section > div:last-of-type div {
+  display: flex;
+}
+
+.icons {
+  padding: 10px;
+  margin-inline: 5px;
+  border: 2px solid #4d5562;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+section > div:last-of-type > div:last-of-type {
+  background-color: #263fa9;
+  padding: 12px 20px;
+  border: 1px solid #7ca9f3;
+  border-radius: 12px;
+  cursor: pointer;
 }
