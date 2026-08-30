@@ -12,7 +12,7 @@ function Container({ display }: ContainerProps) {
   return (
     <section>
       <div>
-        <div>
+        <div style={{ paddingLeft: !display ? "0" : "10px" }}>
           {display ? (
             <p style={{ paddingRight: "15px" }}>Detect Language</p>
           ) : null}
