@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <img src={Logo} alt="Logo" />
+      <img src={Logo} alt="Logo" className="logo" />
       <main>
         <Container display={display} />
         <Container display={!display} />
