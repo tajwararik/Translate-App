@@ -1,21 +1,46 @@
 import Listen from "../../resources/sound_max_fill.svg";
 import Copy from "../../resources/Copy.svg";
 import SortAlfa from "../../resources/Sort_alfa.svg";
+import switchOption from "../../resources/Horizontal_top_left_main.svg";
+import LanguageOptions from "./LanguageOptions";
 
-function Container() {
+export type ContainerProps = {
+  display: boolean;
+};
+
+function Container({ display }: ContainerProps) {
   return (
     <section>
       <div>
-        <p style={{ fontSize: "0.875rem" }}>Detect Language</p>
+        <div>
+          {display ? (
+            <p style={{ paddingRight: "15px" }}>Detect Language</p>
+          ) : null}
+
+          <LanguageOptions display={display} />
+
+          {!display ? (
+            <img src={switchOption} alt="switch option" className="icons" />
+          ) : null}
+        </div>
+
+        <hr />
       </div>
 
-      <hr />
-
       <form action="">
-        <textarea name="" id="" rows={6} maxLength={500}></textarea>
+        <textarea
+          name=""
+          id=""
+          rows={6}
+          maxLength={500}
+          value={
+            display ? "Hello, how are you?" : "Bonjour, comment allez-vous?"
+          }
+          readOnly={!display}
+        ></textarea>
       </form>
 
-      <p>19/500</p>
+      <p style={{ visibility: display ? "visible" : "hidden" }}>19/500</p>
 
       <div>
         <div>
@@ -23,10 +48,12 @@ function Container() {
           <img src={Copy} alt="copy" className="icons" />
         </div>
 
-        <div>
-          <img src={SortAlfa} alt="character" />
-          <p>Translate</p>
-        </div>
+        {display ? (
+          <div className="translate-button">
+            <img src={SortAlfa} alt="character" />
+            <p>Translate</p>
+          </div>
+        ) : null}
       </div>
     </section>
   );
