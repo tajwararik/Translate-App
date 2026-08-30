@@ -4,7 +4,15 @@ import Expand from "../../resources/Expand_down.svg?react";
 function LanguageOptions({ display }: ContainerProps) {
   return (
     <>
-      <span style={{ paddingLeft: !display ? "0" : "15px" }}>English</span>
+      <span
+        style={{
+          paddingLeft: !display ? "10px" : "12px",
+          marginLeft: !display ? "0" : "5px",
+        }}
+        className="selected"
+      >
+        English
+      </span>
       <span>French</span>
       <span>
         Spanish
