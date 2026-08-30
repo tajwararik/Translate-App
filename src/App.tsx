@@ -3,12 +3,14 @@ import Container from "./components/Container";
 import "./App.css";
 
 function App() {
+  const display: boolean = true;
+
   return (
     <>
       <img src={Logo} alt="Logo" />
       <main>
-        <Container />
-        <Container />
+        <Container display={display} />
+        <Container display={!display} />
       </main>
     </>
   );
