@@ -121,6 +121,7 @@ section > form textarea {
   border: none;
   outline: none;
   resize: none;
+  word-break: break-all;
 }
 
 section > p {
