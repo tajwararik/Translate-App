@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import Listen from "../../resources/sound_max_fill.svg";
 import Copy from "../../resources/Copy.svg";
 import SortAlfa from "../../resources/Sort_alfa.svg";
@@ -7,31 +6,17 @@ import LanguageOptions from "./LanguageOptions";
 
 export type ContainerProps = {
   display: boolean;
+  translatingText?: string;
+  translatedText?: string;
+  handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 };
 
-function Container({ display }: ContainerProps) {
-  const [translatingText, setTranslatingText] = useState<string>(
-    "Hello, how are you?",
-  );
-
-  const [translatedText, setTranslatedText] = useState<string>("");
-
-  useEffect(() => {
-    fetch(
-      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
-        translatingText,
-      )}&langpair=en|fr`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.responseData.translatedText);
-        setTranslatedText(data.responseData.translatedText);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [translatingText]);
-
+function Container({
+  display,
+  translatingText,
+  translatedText,
+  handleChange,
+}: ContainerProps) {
   return (
     <section>
       <div>
@@ -50,13 +35,14 @@ function Container({ display }: ContainerProps) {
         <hr />
       </div>
 
-      <form action="">
+      <form id="input-field" action="">
         <textarea
-          name=""
-          id=""
+          id="input-field"
+          name="input-field"
           rows={6}
           maxLength={500}
-          defaultValue={display ? translatingText : translatedText}
+          value={display ? translatingText : translatedText}
+          onChange={handleChange}
           readOnly={!display}
         ></textarea>
       </form>
