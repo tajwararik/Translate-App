@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Listen from "../../resources/sound_max_fill.svg";
 import Copy from "../../resources/Copy.svg";
 import SortAlfa from "../../resources/Sort_alfa.svg";
@@ -9,6 +10,28 @@ export type ContainerProps = {
 };
 
 function Container({ display }: ContainerProps) {
+  const [translatingText, setTranslatingText] = useState<string>(
+    "Hello, how are you?",
+  );
+
+  const [translatedText, setTranslatedText] = useState<string>("");
+
+  useEffect(() => {
+    fetch(
+      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
+        translatingText,
+      )}&langpair=en|fr`,
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.responseData.translatedText);
+        setTranslatedText(data.responseData.translatedText);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [translatingText]);
+
   return (
     <section>
       <div>
@@ -33,9 +56,7 @@ function Container({ display }: ContainerProps) {
           id=""
           rows={6}
           maxLength={500}
-          value={
-            display ? "Hello, how are you?" : "Bonjour, comment allez-vous?"
-          }
+          defaultValue={display ? translatingText : translatedText}
           readOnly={!display}
         ></textarea>
       </form>
