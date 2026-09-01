@@ -9,6 +9,7 @@ export type ContainerProps = {
   translatingText?: string;
   translatedText?: string;
   handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
+  handleTranslate?: () => void;
 };
 
 function Container({
@@ -16,6 +17,7 @@ function Container({
   translatingText,
   translatedText,
   handleChange,
+  handleTranslate,
 }: ContainerProps) {
   return (
     <section>
@@ -47,7 +49,9 @@ function Container({
         ></textarea>
       </form>
 
-      <p style={{ visibility: display ? "visible" : "hidden" }}>19/500</p>
+      <p style={{ visibility: display ? "visible" : "hidden" }}>
+        {translatingText?.length}/500
+      </p>
 
       <div>
         <div>
@@ -56,7 +60,7 @@ function Container({
         </div>
 
         {display ? (
-          <div className="translate-button">
+          <div className="translate-button" onClick={handleTranslate}>
             <img src={SortAlfa} alt="character" />
             <p>Translate</p>
           </div>
