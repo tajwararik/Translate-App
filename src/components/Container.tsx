@@ -10,6 +10,7 @@ export type ContainerProps = {
   translatedText?: string;
   handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   handleTranslate?: () => void;
+  handleCopy?: () => void;
 };
 
 function Container({
@@ -18,6 +19,7 @@ function Container({
   translatedText,
   handleChange,
   handleTranslate,
+  handleCopy,
 }: ContainerProps) {
   return (
     <section>
@@ -56,7 +58,7 @@ function Container({
       <div>
         <div>
           <img src={Listen} alt="listen" className="icons" />
-          <img src={Copy} alt="copy" className="icons" />
+          <img src={Copy} alt="copy" className="icons" onClick={handleCopy} />
         </div>
 
         {display ? (
