@@ -80,8 +80,8 @@ section > div:first-of-type > div {
 }
 
 span {
+  position: relative;
   display: flex;
-  column-gap: 5px;
   padding: 8px 12px;
   margin-inline: 5px;
   border-radius: 12px;
@@ -97,6 +97,16 @@ section > div:first-of-type div > img {
 
 .selected {
   background-color: #4d5562;
+}
+
+#chooseLanguage {
+  all: unset;
+}
+
+#chooseLanguage > option {
+  color: #d2d5da;
+  background-color: #040711;
+  font-size: 0.75rem;
 }
 
 hr {
