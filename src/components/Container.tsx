@@ -11,6 +11,8 @@ export type ContainerProps = {
   handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   handleTranslate?: () => void;
   handleCopy?: () => void;
+  handleInputLanguage?: React.ChangeEventHandler<HTMLSelectElement>;
+  handleOutputLanguage?: React.ChangeEventHandler<HTMLSelectElement>;
 };
 
 function Container({
@@ -20,6 +22,8 @@ function Container({
   handleChange,
   handleTranslate,
   handleCopy,
+  handleInputLanguage,
+  handleOutputLanguage,
 }: ContainerProps) {
   return (
     <section>
@@ -29,7 +33,11 @@ function Container({
             <p style={{ paddingRight: "15px" }}>Detect Language</p>
           ) : null}
 
-          <LanguageOptions display={display} />
+          <LanguageOptions
+            display={display}
+            handleInputLanguage={handleInputLanguage}
+            handleOutputLanguage={handleOutputLanguage}
+          />
 
           {!display ? (
             <img src={switchOption} alt="switch option" className="icons" />
@@ -39,7 +47,7 @@ function Container({
         <hr />
       </div>
 
-      <form id="input-field" action="">
+      <form>
         <textarea
           id="input-field"
           name="input-field"

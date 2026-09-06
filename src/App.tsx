@@ -14,15 +14,17 @@ function App() {
     "Bonjour, comment allez-vous?",
   );
 
+  const [inputLanguage, setInputLanguage] = useState<string>("en");
+  const [outputLanguage, setOutputLanguage] = useState<string>("fr");
+
   const handleTranslate = () => {
     fetch(
       `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
         translatingText,
-      )}&langpair=en|fr`,
+      )}&langpair=${inputLanguage}|${outputLanguage}`,
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.responseData.translatedText);
         setTranslatedText(data.responseData.translatedText);
       })
       .catch((error) => {
@@ -38,6 +40,16 @@ function App() {
   const handleCopy = async (text: string) =>
     await navigator.clipboard.writeText(text);
 
+  const handleInputLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value);
+    setInputLanguage(e.target.value);
+  };
+
+  const handleOutputLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value);
+    setOutputLanguage(e.target.value);
+  };
+
   return (
     <>
       <img src={Logo} alt="Logo" className="logo" />
@@ -48,11 +60,14 @@ function App() {
           handleChange={handleChange}
           handleTranslate={handleTranslate}
           handleCopy={() => handleCopy(translatingText)}
+          handleInputLanguage={handleInputLanguage}
         />
+
         <Container
           display={!display}
           translatedText={translatedText}
           handleCopy={() => handleCopy(translatedText)}
+          handleOutputLanguage={handleOutputLanguage}
         />
       </main>
     </>

@@ -2,7 +2,11 @@ import type { ContainerProps } from "./Container";
 import { Languages } from "./Languages";
 import Expand from "../../resources/Expand_down.svg?react";
 
-function LanguageOptions({ display }: ContainerProps) {
+function LanguageOptions({
+  display,
+  handleInputLanguage,
+  handleOutputLanguage,
+}: ContainerProps) {
   return (
     <>
       <span
@@ -17,7 +21,10 @@ function LanguageOptions({ display }: ContainerProps) {
       <span>French</span>
       <span>
         <label htmlFor="chooseLanguage">
-          <select id="chooseLanguage">
+          <select
+            id="chooseLanguage"
+            onChange={display ? handleInputLanguage : handleOutputLanguage}
+          >
             {Languages.map((language) => (
               <option key={language.code} value={language.code}>
                 {language.name}
