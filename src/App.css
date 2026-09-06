@@ -82,6 +82,7 @@ section > div:first-of-type > div {
 span {
   position: relative;
   display: flex;
+  align-items: center;
   padding: 8px 12px;
   margin-inline: 5px;
   border-radius: 12px;
