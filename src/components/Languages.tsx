@@ -1,8 +1,9 @@
 export const Languages = [
+  { name: "English", code: "en" },
+  { name: "French", code: "fr" },
   { name: "Spanish", code: "es" },
   { name: "Bengali", code: "bn" },
   { name: "Albanian", code: "sq" },
-  { name: "English", code: "en" },
   { name: "Arabic", code: "ar" },
   { name: "Armenian", code: "hy" },
   { name: "Azerbaijan", code: "az" },
@@ -57,7 +58,6 @@ export const Languages = [
   { name: "Uzbek", code: "uz" },
   { name: "Ukrainian", code: "uk" },
   { name: "Finnish", code: "fi" },
-  { name: "French", code: "fr" },
   { name: "Croatian", code: "hr" },
   { name: "Czech", code: "cs" },
   { name: "Swedish", code: "sv" },
