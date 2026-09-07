@@ -3,6 +3,7 @@ import Copy from "../../resources/Copy.svg";
 import SortAlfa from "../../resources/Sort_alfa.svg";
 import switchOption from "../../resources/Horizontal_top_left_main.svg";
 import LanguageOptions from "./LanguageOptions";
+import type React from "react";
 
 export type ContainerProps = {
   display: boolean;
@@ -11,8 +12,8 @@ export type ContainerProps = {
   handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   handleTranslate?: () => void;
   handleCopy?: () => void;
-  handleInputLanguage?: React.ChangeEventHandler<HTMLSelectElement>;
-  handleOutputLanguage?: React.ChangeEventHandler<HTMLSelectElement>;
+  handleInputLanguage?: (code: string) => void;
+  handleOutputLanguage?: (code: string) => void;
 };
 
 function Container({

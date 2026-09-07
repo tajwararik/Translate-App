@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Logo from "../resources/logo.svg";
 import Container from "./components/Container";
 import "./App.css";
@@ -40,14 +40,12 @@ function App() {
   const handleCopy = async (text: string) =>
     await navigator.clipboard.writeText(text);
 
-  const handleInputLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
-    setInputLanguage(e.target.value);
+  const handleInputLanguage = (code: string) => {
+    setInputLanguage(code);
   };
 
-  const handleOutputLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
-    setOutputLanguage(e.target.value);
+  const handleOutputLanguage = (code: string) => {
+    setOutputLanguage(code);
   };
 
   return (
