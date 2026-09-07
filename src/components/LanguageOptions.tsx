@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ContainerProps } from "./Container";
 import { Languages } from "./Languages";
 import Expand from "../../resources/Expand_down.svg?react";
@@ -7,35 +8,47 @@ function LanguageOptions({
   handleInputLanguage,
   handleOutputLanguage,
 }: ContainerProps) {
+  const [expand, setExpand] = useState(false);
+
+  const defaultLanguages = Languages.slice(0, 3);
+  const remainingLanguages = Languages.slice(3);
+
+  const handleExpand = () => setExpand((prev) => !prev);
+
+  const handleLanguage = (code: string) => {
+    if (display) handleInputLanguage?.(code);
+    else handleOutputLanguage?.(code);
+  };
+
   return (
     <>
-      <span
-        style={{
-          paddingLeft: !display ? "10px" : "12px",
-          marginLeft: !display ? "0" : "5px",
-        }}
-        className="selected"
-      >
-        English
-      </span>
-      <span>French</span>
-      <span>
-        <label htmlFor="chooseLanguage">
-          <select
-            id="chooseLanguage"
-            onChange={display ? handleInputLanguage : handleOutputLanguage}
+      <div className="language-row">
+        {defaultLanguages.map((language, index) => (
+          <span
+            key={language.code}
+            style={{
+              paddingLeft: index === 0 && !display ? "10px" : "12px",
+              marginLeft: index === 0 && !display ? "0" : "5px",
+            }}
+            onClick={() => handleLanguage(language.code)}
           >
-            {Languages.map((language) => (
-              <option key={language.code} value={language.code}>
-                {language.name}
-              </option>
-            ))}
-          </select>
-        </label>
+            {language.name}
+          </span>
+        ))}
+
         <Expand
-          style={{ color: "#d2d5da", position: "absolute", right: "20%" }}
+          style={{ color: "#d2d5da", cursor: "pointer" }}
+          onClick={handleExpand}
         />
-      </span>
+
+        {expand && (
+          <div className="language-dropdown">
+            {remainingLanguages.map((language) => (
+              <span key={language.code}>{language.name}</span>
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 }
