@@ -4,6 +4,8 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #d2d5da #040711;
 }
 
 body {
@@ -79,14 +81,31 @@ section > div:first-of-type > div {
   padding: 5px 0 20px;
 }
 
-span {
-  position: relative;
+.language-row {
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+span {
   padding: 8px 12px;
   margin-inline: 5px;
   border-radius: 12px;
   cursor: pointer;
+}
+
+.language-dropdown {
+  max-height: 250px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #040711;
+  overflow-y: auto;
+  border: 1px solid #d2d5da;
+  border-radius: 8px;
+  z-index: 999;
 }
 
 section > div:first-of-type div > img {
