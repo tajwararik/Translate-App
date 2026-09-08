@@ -3,11 +3,20 @@ import type { ContainerProps } from "./Container";
 import { Languages } from "./Languages";
 import Expand from "../../resources/Expand_down.svg?react";
 
+type Languages = {
+  name: string;
+  code: string;
+};
+
 function LanguageOptions({
   display,
   handleInputLanguage,
   handleOutputLanguage,
 }: ContainerProps) {
+  const [visibleOptions, setVisibleOptions] = useState<Languages[]>(
+    Languages.slice(0, 3),
+  );
+
   const [expand, setExpand] = useState(false);
 
   const [selectedInputLanguage, setSelectedInputLanguage] =
@@ -16,7 +25,6 @@ function LanguageOptions({
   const [selectedOutputLanguage, setSelectedOutputLanguage] =
     useState<string>("fr");
 
-  const defaultLanguages = Languages.slice(0, 3);
   const remainingLanguages = Languages.slice(3);
 
   const handleExpand = () => setExpand((prev) => !prev);
@@ -31,10 +39,17 @@ function LanguageOptions({
     else setSelectedOutputLanguage(code);
   };
 
+  const addToVisibleOptions = (option: Languages) => {
+    setVisibleOptions((prev) => prev.filter((_, index) => index !== 2));
+    setVisibleOptions((prev) => [...prev, option]);
+    handleLanguage(option.code);
+    setExpand((prev) => !prev);
+  };
+
   return (
     <>
       <div className="language-row">
-        {defaultLanguages.map((language, index) => (
+        {visibleOptions.map((language, index) => (
           <span
             key={language.code}
             style={{
@@ -65,7 +80,12 @@ function LanguageOptions({
         {expand && (
           <div className="language-dropdown">
             {remainingLanguages.map((language) => (
-              <span key={language.code}>{language.name}</span>
+              <span
+                key={language.code}
+                onClick={() => addToVisibleOptions(language)}
+              >
+                {language.name}
+              </span>
             ))}
           </div>
         )}
