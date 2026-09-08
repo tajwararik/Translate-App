@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { ContainerProps } from "./Container";
-import { Languages } from "./Languages";
+import { LanguageData } from "./LanguageData";
 import Expand from "../../resources/Expand_down.svg?react";
 
-type Languages = {
+type LanguageData = {
   name: string;
   code: string;
 };
@@ -13,8 +13,12 @@ function LanguageOptions({
   handleInputLanguage,
   handleOutputLanguage,
 }: ContainerProps) {
-  const [visibleOptions, setVisibleOptions] = useState<Languages[]>(
-    Languages.slice(0, 3),
+  const [visibleOptions, setVisibleOptions] = useState<LanguageData[]>(
+    LanguageData.slice(0, 3),
+  );
+
+  const [remainingLanguages, setRemainingLanguages] = useState<LanguageData[]>(
+    LanguageData.slice(3),
   );
 
   const [expand, setExpand] = useState(false);
@@ -24,8 +28,6 @@ function LanguageOptions({
 
   const [selectedOutputLanguage, setSelectedOutputLanguage] =
     useState<string>("fr");
-
-  const remainingLanguages = Languages.slice(3);
 
   const handleExpand = () => setExpand((prev) => !prev);
 
@@ -39,10 +41,15 @@ function LanguageOptions({
     else setSelectedOutputLanguage(code);
   };
 
-  const addToVisibleOptions = (option: Languages) => {
+  const addToVisibleOptions = (option: LanguageData) => {
+    setRemainingLanguages((prev) => [...prev, visibleOptions[2]]);
     setVisibleOptions((prev) => prev.filter((_, index) => index !== 2));
     setVisibleOptions((prev) => [...prev, option]);
     handleLanguage(option.code);
+    handleSelected(option.code);
+    setRemainingLanguages((prev) =>
+      prev.filter((language) => language.name !== option.name),
+    );
     setExpand((prev) => !prev);
   };
 
