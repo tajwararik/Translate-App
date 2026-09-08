@@ -1,4 +1,4 @@
-export const Languages = [
+export const LanguageData = [
   { name: "English", code: "en" },
   { name: "French", code: "fr" },
   { name: "Spanish", code: "es" },
