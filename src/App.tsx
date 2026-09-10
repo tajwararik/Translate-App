@@ -18,6 +18,7 @@ function App() {
   const [outputLanguage, setOutputLanguage] = useState<string>("fr");
 
   const handleTranslate = () => {
+    console.log(inputLanguage, outputLanguage);
     fetch(
       `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
         translatingText,
@@ -48,12 +49,21 @@ function App() {
     setOutputLanguage(code);
   };
 
+  const swapLanguages = () => {
+    setInputLanguage(outputLanguage);
+    setOutputLanguage(inputLanguage);
+
+    setTranslatingText(translatedText);
+    setTranslatedText(translatingText);
+  };
+
   return (
     <>
       <img src={Logo} alt="Logo" className="logo" />
       <main>
         <Container
           display={display}
+          inputLanguage={inputLanguage}
           translatingText={translatingText}
           handleChange={handleChange}
           handleTranslate={handleTranslate}
@@ -63,9 +73,11 @@ function App() {
 
         <Container
           display={!display}
+          outputLanguage={outputLanguage}
           translatedText={translatedText}
           handleCopy={() => handleCopy(translatedText)}
           handleOutputLanguage={handleOutputLanguage}
+          handleSwapLanguages={swapLanguages}
         />
       </main>
     </>

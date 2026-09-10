@@ -1,7 +1,7 @@
 import Listen from "../../resources/sound_max_fill.svg";
 import Copy from "../../resources/Copy.svg";
 import SortAlfa from "../../resources/Sort_alfa.svg";
-import switchOption from "../../resources/Horizontal_top_left_main.svg";
+import swapOptions from "../../resources/Horizontal_top_left_main.svg";
 import LanguageOptions from "./LanguageOptions";
 import type React from "react";
 
@@ -9,22 +9,28 @@ export type ContainerProps = {
   display: boolean;
   translatingText?: string;
   translatedText?: string;
+  inputLanguage?: string;
+  outputLanguage?: string;
   handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   handleTranslate?: () => void;
   handleCopy?: () => void;
   handleInputLanguage?: (code: string) => void;
   handleOutputLanguage?: (code: string) => void;
+  handleSwapLanguages?: () => void;
 };
 
 function Container({
   display,
   translatingText,
   translatedText,
+  inputLanguage,
+  outputLanguage,
   handleChange,
   handleTranslate,
   handleCopy,
   handleInputLanguage,
   handleOutputLanguage,
+  handleSwapLanguages,
 }: ContainerProps) {
   return (
     <section>
@@ -36,12 +42,19 @@ function Container({
 
           <LanguageOptions
             display={display}
+            inputLanguage={inputLanguage}
+            outputLanguage={outputLanguage}
             handleInputLanguage={handleInputLanguage}
             handleOutputLanguage={handleOutputLanguage}
           />
 
           {!display ? (
-            <img src={switchOption} alt="switch option" className="icons" />
+            <img
+              src={swapOptions}
+              alt="swap options"
+              className="icons"
+              onClick={handleSwapLanguages}
+            />
           ) : null}
         </div>
 

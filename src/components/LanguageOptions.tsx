@@ -10,6 +10,8 @@ type LanguageData = {
 
 function LanguageOptions({
   display,
+  inputLanguage,
+  outputLanguage,
   handleInputLanguage,
   handleOutputLanguage,
 }: ContainerProps) {
@@ -23,12 +25,6 @@ function LanguageOptions({
 
   const [expand, setExpand] = useState(false);
 
-  const [selectedInputLanguage, setSelectedInputLanguage] =
-    useState<string>("en");
-
-  const [selectedOutputLanguage, setSelectedOutputLanguage] =
-    useState<string>("fr");
-
   const handleExpand = () => setExpand((prev) => !prev);
 
   const handleLanguage = (code: string) => {
@@ -36,17 +32,11 @@ function LanguageOptions({
     else handleOutputLanguage?.(code);
   };
 
-  const handleSelected = (code: string) => {
-    if (display) setSelectedInputLanguage(code);
-    else setSelectedOutputLanguage(code);
-  };
-
   const addToVisibleOptions = (option: LanguageData) => {
     setRemainingLanguages((prev) => [...prev, visibleOptions[2]]);
     setVisibleOptions((prev) => prev.filter((_, index) => index !== 2));
     setVisibleOptions((prev) => [...prev, option]);
     handleLanguage(option.code);
-    handleSelected(option.code);
     setRemainingLanguages((prev) =>
       prev.filter((language) => language.name !== option.name),
     );
@@ -65,14 +55,11 @@ function LanguageOptions({
               paddingInline: index === 2 ? "4px" : "12px",
               marginRight: index === 2 ? "0" : "5px",
             }}
-            onClick={() => {
-              handleLanguage(language.code);
-              handleSelected(language.code);
-            }}
+            onClick={() => handleLanguage(language.code)}
             className={
-              display && selectedInputLanguage === language.code
+              display && inputLanguage === language.code
                 ? "selected"
-                : !display && selectedOutputLanguage === language.code
+                : !display && outputLanguage === language.code
                   ? "selected"
                   : ""
             }
