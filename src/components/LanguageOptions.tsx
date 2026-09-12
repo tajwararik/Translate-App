@@ -1,48 +1,23 @@
-import { useState } from "react";
 import type { ContainerProps } from "./Container";
 import { LanguageData } from "./LanguageData";
 import Expand from "../../resources/Expand_down.svg?react";
 
-type LanguageData = {
-  name: string;
-  code: string;
-};
-
 function LanguageOptions({
-  display,
+  isInput,
   inputLanguage,
   outputLanguage,
-  handleInputLanguage,
-  handleOutputLanguage,
+  visibleOptions,
+  expandInputOptions,
+  expandOutputOptions,
+  handleLanguage,
+  handleExpandInputOptions,
+  handleExpandOutputOptions,
+  addToVisibleOptions,
 }: ContainerProps) {
-  const [visibleOptions, setVisibleOptions] = useState<LanguageData[]>(
-    LanguageData.slice(0, 3),
+  const remainingLanguages = LanguageData.filter(
+    (language) =>
+      !visibleOptions.some((option) => option.code === language.code),
   );
-
-  const [remainingLanguages, setRemainingLanguages] = useState<LanguageData[]>(
-    LanguageData.slice(3),
-  );
-
-  const [expand, setExpand] = useState(false);
-
-  const handleExpand = () => setExpand((prev) => !prev);
-
-  const handleLanguage = (code: string) => {
-    if (display) handleInputLanguage?.(code);
-    else handleOutputLanguage?.(code);
-  };
-
-  const addToVisibleOptions = (option: LanguageData) => {
-    setRemainingLanguages((prev) => [...prev, visibleOptions[2]]);
-    setVisibleOptions((prev) => prev.filter((_, index) => index !== 2));
-    setVisibleOptions((prev) => [...prev, option]);
-    handleLanguage(option.code);
-    setRemainingLanguages((prev) =>
-      prev.filter((language) => language.name !== option.name),
-    );
-    setExpand((prev) => !prev);
-  };
-
   return (
     <>
       <div className="language-row">
@@ -50,16 +25,16 @@ function LanguageOptions({
           <span
             key={language.code}
             style={{
-              paddingLeft: index === 0 && !display ? "10px" : "12px",
-              marginLeft: index === 0 && !display ? "0" : "5px",
+              paddingLeft: index === 0 && isInput === false ? "10px" : "12px",
+              marginLeft: index === 0 && isInput === false ? "0" : "5px",
               paddingInline: index === 2 ? "4px" : "12px",
               marginRight: index === 2 ? "0" : "5px",
             }}
-            onClick={() => handleLanguage(language.code)}
+            onClick={() => handleLanguage(language.code, isInput)}
             className={
-              display && inputLanguage === language.code
+              isInput === true && inputLanguage === language.code
                 ? "selected"
-                : !display && outputLanguage === language.code
+                : isInput === false && outputLanguage === language.code
                   ? "selected"
                   : ""
             }
@@ -70,15 +45,17 @@ function LanguageOptions({
 
         <Expand
           style={{ color: "#d2d5da", cursor: "pointer" }}
-          onClick={handleExpand}
+          onClick={
+            isInput ? handleExpandInputOptions : handleExpandOutputOptions
+          }
         />
 
-        {expand && (
+        {(expandInputOptions || expandOutputOptions) && (
           <div className="language-dropdown">
             {remainingLanguages.map((language) => (
               <span
                 key={language.code}
-                onClick={() => addToVisibleOptions(language)}
+                onClick={() => addToVisibleOptions(language, isInput)}
               >
                 {language.name}
               </span>

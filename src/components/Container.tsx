@@ -1,54 +1,70 @@
+import type React from "react";
+import type { Language } from "../App";
 import Listen from "../../resources/sound_max_fill.svg";
 import Copy from "../../resources/Copy.svg";
 import SortAlfa from "../../resources/Sort_alfa.svg";
 import swapOptions from "../../resources/Horizontal_top_left_main.svg";
 import LanguageOptions from "./LanguageOptions";
-import type React from "react";
 
 export type ContainerProps = {
-  display: boolean;
-  translatingText?: string;
-  translatedText?: string;
+  isInput: boolean;
   inputLanguage?: string;
   outputLanguage?: string;
+  visibleOptions: Language[];
+  translatingText?: string;
+  translatedText?: string;
+  expandInputOptions?: boolean;
+  expandOutputOptions?: boolean;
+  handleLanguage: (code: string, isInput: boolean) => void;
+  handleExpandInputOptions?: () => void;
+  handleExpandOutputOptions?: () => void;
+  addToVisibleOptions: (option: Language, isInput: boolean) => void;
   handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   handleTranslate?: () => void;
   handleCopy?: () => void;
-  handleInputLanguage?: (code: string) => void;
-  handleOutputLanguage?: (code: string) => void;
   handleSwapLanguages?: () => void;
 };
 
 function Container({
-  display,
-  translatingText,
-  translatedText,
+  isInput,
   inputLanguage,
   outputLanguage,
+  visibleOptions,
+  translatingText,
+  translatedText,
+  expandInputOptions,
+  expandOutputOptions,
+  handleLanguage,
+  handleExpandInputOptions,
+  handleExpandOutputOptions,
+  addToVisibleOptions,
   handleChange,
   handleTranslate,
   handleCopy,
-  handleInputLanguage,
-  handleOutputLanguage,
   handleSwapLanguages,
 }: ContainerProps) {
   return (
     <section>
       <div>
-        <div style={{ paddingLeft: !display ? "0" : "10px" }}>
-          {display ? (
+        <div style={{ paddingLeft: isInput === false ? "0" : "10px" }}>
+          {isInput === true ? (
             <p style={{ paddingRight: "15px" }}>Detect Language</p>
           ) : null}
 
           <LanguageOptions
-            display={display}
+            isInput={isInput}
             inputLanguage={inputLanguage}
             outputLanguage={outputLanguage}
-            handleInputLanguage={handleInputLanguage}
-            handleOutputLanguage={handleOutputLanguage}
+            visibleOptions={visibleOptions}
+            expandInputOptions={expandInputOptions}
+            expandOutputOptions={expandOutputOptions}
+            handleLanguage={handleLanguage}
+            handleExpandInputOptions={handleExpandInputOptions}
+            handleExpandOutputOptions={handleExpandOutputOptions}
+            addToVisibleOptions={addToVisibleOptions}
           />
 
-          {!display ? (
+          {isInput === false ? (
             <img
               src={swapOptions}
               alt="swap options"
@@ -67,13 +83,13 @@ function Container({
           name="input-field"
           rows={6}
           maxLength={500}
-          value={display ? translatingText : translatedText}
+          value={isInput === true ? translatingText : translatedText}
           onChange={handleChange}
-          readOnly={!display}
+          readOnly={isInput === false}
         ></textarea>
       </form>
 
-      <p style={{ visibility: display ? "visible" : "hidden" }}>
+      <p style={{ visibility: isInput === true ? "visible" : "hidden" }}>
         {translatingText?.length}/500
       </p>
 
@@ -83,7 +99,7 @@ function Container({
           <img src={Copy} alt="copy" className="icons" onClick={handleCopy} />
         </div>
 
-        {display ? (
+        {isInput === true ? (
           <div className="translate-button" onClick={handleTranslate}>
             <img src={SortAlfa} alt="character" />
             <p>Translate</p>
