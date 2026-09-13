@@ -21,7 +21,7 @@ export const LanguageData = [
   { name: "Greek", code: "el" },
   { name: "Georgian", code: "ka" },
   { name: "Danish", code: "da" },
-  { name: "Yiddish", code: "he" },
+  { name: "Yiddish", code: "yi" },
   { name: "Indonesian", code: "id" },
   { name: "Irish", code: "ga" },
   { name: "Italian", code: "it" },
