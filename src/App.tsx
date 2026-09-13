@@ -70,7 +70,25 @@ function App() {
     }
   };
 
+  function compareArray(input: Language[], output: Language[]) {
+    return (
+      input.length === output.length &&
+      input.every((value, index) => value.code === output[index].code)
+    );
+  }
+
   const swapLanguages = () => {
+    const areSame = compareArray(
+      visibleOptions.inputOptions,
+      visibleOptions.outputOptions,
+    );
+
+    if (!areSame) {
+      alert("Available language options on both sides should be same!!!");
+
+      return;
+    }
+
     setInputLanguage(outputLanguage);
     setOutputLanguage(inputLanguage);
 
