@@ -1,4 +1,4 @@
-<h1 align="center">{Translate App} | devChallenges</h1>
+<h1 align="center">Translate App | devChallenges</h1>
 
 <div align="center">
    Solution for a challenge <a href="https://devchallenges.io/challenge/translate-app" target="_blank">Translate app</a> from <a href="http://devchallenges.io" target="_blank">devChallenges.io</a>.
@@ -26,8 +26,8 @@
 
 ## Features
 
-- Total 64 languages available
-- Can swap translation
-- Can listen input and output texts
-- Can copy input and output texts
-- Can insert maximum 500 characters
+- Supports 64 languages
+- Swap source and target languages
+- Listen to input and translated text
+- Copy input and translated text
+- Supports up to 500 characters per translation
