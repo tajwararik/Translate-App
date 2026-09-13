@@ -21,8 +21,9 @@ export type ContainerProps = {
   addToVisibleOptions: (option: Language, isInput: boolean) => void;
   handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   handleTranslate?: () => void;
-  handleCopy?: () => void;
   handleSwapLanguages?: () => void;
+  handleListen?: (isInput: boolean) => void;
+  handleCopy?: () => void;
 };
 
 function Container({
@@ -40,8 +41,9 @@ function Container({
   addToVisibleOptions,
   handleChange,
   handleTranslate,
-  handleCopy,
   handleSwapLanguages,
+  handleListen,
+  handleCopy,
 }: ContainerProps) {
   return (
     <section>
@@ -95,7 +97,12 @@ function Container({
 
       <div>
         <div>
-          <img src={Listen} alt="listen" className="icons" />
+          <img
+            src={Listen}
+            alt="listen"
+            className="icons"
+            onClick={() => handleListen?.(isInput)}
+          />
           <img src={Copy} alt="copy" className="icons" onClick={handleCopy} />
         </div>
 

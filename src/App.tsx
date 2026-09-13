@@ -116,6 +116,16 @@ function App() {
       });
   };
 
+  const handleListen = (isInput: boolean) => {
+    window.speechSynthesis.cancel();
+
+    const speech = isInput
+      ? new SpeechSynthesisUtterance(translatingText)
+      : new SpeechSynthesisUtterance(translatedText);
+    speech.lang = isInput ? inputLanguage : outputLanguage;
+    window.speechSynthesis.speak(speech);
+  };
+
   const handleCopy = async (text: string) =>
     await navigator.clipboard.writeText(text);
 
@@ -134,6 +144,7 @@ function App() {
           addToVisibleOptions={addToVisibleOptions}
           handleChange={handleChange}
           handleTranslate={handleTranslate}
+          handleListen={handleListen}
           handleCopy={() => handleCopy(translatingText)}
         />
 
@@ -146,8 +157,9 @@ function App() {
           handleLanguage={handleLanguage}
           handleExpandOutputOptions={handleExpandOutputOptions}
           addToVisibleOptions={addToVisibleOptions}
-          handleCopy={() => handleCopy(translatedText)}
           handleSwapLanguages={swapLanguages}
+          handleListen={handleListen}
+          handleCopy={() => handleCopy(translatedText)}
         />
       </main>
     </>
