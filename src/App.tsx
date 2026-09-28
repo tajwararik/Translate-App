@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LanguageData } from "./components/LanguageData";
+import { LanguageData } from "./data/LanguageData";
 import Logo from "../resources/logo.svg";
 import Container from "./components/Container";
 import "./App.css";

@@ -1,5 +1,5 @@
 import type { ContainerProps } from "./Container";
-import { LanguageData } from "./LanguageData";
+import { LanguageData } from "../data/LanguageData";
 import Expand from "../../resources/Expand_down.svg?react";
 
 function LanguageOptions({
