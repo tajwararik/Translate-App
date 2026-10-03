@@ -15,8 +15,10 @@ type Option = {
 };
 
 function App() {
-  const [inputLanguage, setInputLanguage] = useState<string>("en");
-  const [outputLanguage, setOutputLanguage] = useState<string>("fr");
+  const [language, setLanguage] = useState<{ input: string; output: string }>({
+    input: "en",
+    output: "fr",
+  });
 
   const [visibleOptions, setVisibleOptions] = useState<Option>({
     inputOptions: LanguageData.slice(0, 3),
@@ -35,8 +37,8 @@ function App() {
   );
 
   const handleLanguage = (code: string, isInput: boolean) => {
-    if (isInput) setInputLanguage(code);
-    else setOutputLanguage(code);
+    if (isInput) setLanguage((prev) => ({ ...prev, input: code }));
+    else setLanguage((prev) => ({ ...prev, output: code }));
   };
 
   const handleExpandInputOptions = () => setExpandInputOptions((prev) => !prev);
@@ -54,7 +56,7 @@ function App() {
         ],
       }));
 
-      setInputLanguage(option.code);
+      setLanguage((prev) => ({ ...prev, input: option.code }));
       setExpandInputOptions((prev) => !prev);
     } else {
       setVisibleOptions((prev: Option) => ({
@@ -65,7 +67,7 @@ function App() {
         ],
       }));
 
-      setOutputLanguage(option.code);
+      setLanguage((prev) => ({ ...prev, output: option.code }));
       setExpandOutputOptions((prev) => !prev);
     }
   };
@@ -89,8 +91,10 @@ function App() {
       return;
     }
 
-    setInputLanguage(outputLanguage);
-    setOutputLanguage(inputLanguage);
+    setLanguage((prev) => ({
+      input: prev.output,
+      output: prev.input,
+    }));
 
     setTranslatingText(translatedText);
     setTranslatedText(translatingText);
@@ -105,7 +109,7 @@ function App() {
     fetch(
       `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
         translatingText,
-      )}&langpair=${inputLanguage}|${outputLanguage}`,
+      )}&langpair=${language.input}|${language.output}`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -122,7 +126,7 @@ function App() {
     const speech = isInput
       ? new SpeechSynthesisUtterance(translatingText)
       : new SpeechSynthesisUtterance(translatedText);
-    speech.lang = isInput ? inputLanguage : outputLanguage;
+    speech.lang = isInput ? language.input : language.output;
     window.speechSynthesis.speak(speech);
   };
 
@@ -135,7 +139,7 @@ function App() {
       <main>
         <Container
           isInput={true}
-          inputLanguage={inputLanguage}
+          inputLanguage={language.input}
           visibleOptions={visibleOptions.inputOptions}
           translatingText={translatingText}
           expandInputOptions={expandInputOptions}
@@ -150,7 +154,7 @@ function App() {
 
         <Container
           isInput={false}
-          outputLanguage={outputLanguage}
+          outputLanguage={language.output}
           visibleOptions={visibleOptions.outputOptions}
           translatedText={translatedText}
           expandOutputOptions={expandOutputOptions}
