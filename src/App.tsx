@@ -15,7 +15,10 @@ type Option = {
 };
 
 function App() {
-  const [language, setLanguage] = useState<{ input: string; output: string }>({
+  const [languageCode, setLanguageCode] = useState<{
+    input: string;
+    output: string;
+  }>({
     input: "en",
     output: "fr",
   });
@@ -25,22 +28,19 @@ function App() {
     outputOptions: LanguageData.slice(0, 3),
   });
 
-  const [expand, setExpand] = useState({
+  const [expand, setExpand] = useState<{ input: boolean; output: boolean }>({
     input: false,
     output: false,
   });
 
-  const [translatingText, setTranslatingText] = useState<string>(
-    "Hello, how are you?",
-  );
-
-  const [translatedText, setTranslatedText] = useState<string>(
-    "Bonjour, comment allez-vous?",
-  );
+  const [text, setText] = useState<{ inputText: string; outputText: string }>({
+    inputText: "Hello, how are you?",
+    outputText: "Bonjour, comment allez-vous?",
+  });
 
   const handleLanguage = (code: string, isInput: boolean) => {
-    if (isInput) setLanguage((prev) => ({ ...prev, input: code }));
-    else setLanguage((prev) => ({ ...prev, output: code }));
+    if (isInput) setLanguageCode((prev) => ({ ...prev, input: code }));
+    else setLanguageCode((prev) => ({ ...prev, output: code }));
   };
 
   const handleExpandInputOptions = () =>
@@ -59,7 +59,7 @@ function App() {
         ],
       }));
 
-      setLanguage((prev) => ({ ...prev, input: option.code }));
+      setLanguageCode((prev) => ({ ...prev, input: option.code }));
       setExpand((prev) => ({ ...prev, input: !prev.input }));
     } else {
       setVisibleOptions((prev: Option) => ({
@@ -70,7 +70,7 @@ function App() {
         ],
       }));
 
-      setLanguage((prev) => ({ ...prev, output: option.code }));
+      setLanguageCode((prev) => ({ ...prev, output: option.code }));
       setExpand((prev) => ({ ...prev, output: !prev.output }));
     }
   };
@@ -94,29 +94,35 @@ function App() {
       return;
     }
 
-    setLanguage((prev) => ({
+    setLanguageCode((prev) => ({
       input: prev.output,
       output: prev.input,
     }));
 
-    setTranslatingText(translatedText);
-    setTranslatedText(translatingText);
+    setText((prev) => ({
+      inputText: prev.outputText,
+      outputText: prev.inputText,
+    }));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length == 0) setTranslatedText("");
-    setTranslatingText(e.target.value);
+    if (e.target.value.length == 0)
+      setText((prev) => ({ ...prev, inputText: "" }));
+    setText((prev) => ({ ...prev, inputText: e.target.value }));
   };
 
   const handleTranslate = () => {
     fetch(
       `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
-        translatingText,
-      )}&langpair=${language.input}|${language.output}`,
+        text.inputText,
+      )}&langpair=${languageCode.input}|${languageCode.output}`,
     )
       .then((response) => response.json())
       .then((data) => {
-        setTranslatedText(data.responseData.translatedText);
+        setText((prev) => ({
+          ...prev,
+          outputText: data.responseData.translatedText,
+        }));
       })
       .catch((error) => {
         console.error(error);
@@ -127,9 +133,9 @@ function App() {
     window.speechSynthesis.cancel();
 
     const speech = isInput
-      ? new SpeechSynthesisUtterance(translatingText)
-      : new SpeechSynthesisUtterance(translatedText);
-    speech.lang = isInput ? language.input : language.output;
+      ? new SpeechSynthesisUtterance(text.inputText)
+      : new SpeechSynthesisUtterance(text.outputText);
+    speech.lang = isInput ? languageCode.input : languageCode.output;
     window.speechSynthesis.speak(speech);
   };
 
@@ -142,9 +148,9 @@ function App() {
       <main>
         <Container
           isInput={true}
-          inputLanguage={language.input}
+          inputLanguage={languageCode.input}
           visibleOptions={visibleOptions.inputOptions}
-          translatingText={translatingText}
+          translatingText={text.inputText}
           expandInputOptions={expand.input}
           handleLanguage={handleLanguage}
           handleExpandInputOptions={handleExpandInputOptions}
@@ -152,21 +158,21 @@ function App() {
           handleChange={handleChange}
           handleTranslate={handleTranslate}
           handleListen={handleListen}
-          handleCopy={() => handleCopy(translatingText)}
+          handleCopy={() => handleCopy(text.inputText)}
         />
 
         <Container
           isInput={false}
-          outputLanguage={language.output}
+          outputLanguage={languageCode.output}
           visibleOptions={visibleOptions.outputOptions}
-          translatedText={translatedText}
+          translatedText={text.outputText}
           expandOutputOptions={expand.output}
           handleLanguage={handleLanguage}
           handleExpandOutputOptions={handleExpandOutputOptions}
           addToVisibleOptions={addToVisibleOptions}
           handleSwapLanguages={swapLanguages}
           handleListen={handleListen}
-          handleCopy={() => handleCopy(translatedText)}
+          handleCopy={() => handleCopy(text.outputText)}
         />
       </main>
     </>
