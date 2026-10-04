@@ -16,8 +16,7 @@ export type ContainerProps = {
   expandInputOptions?: boolean;
   expandOutputOptions?: boolean;
   handleLanguage: (code: string, isInput: boolean) => void;
-  handleExpandInputOptions?: () => void;
-  handleExpandOutputOptions?: () => void;
+  handleExpand: (isInput: boolean) => void;
   addToVisibleOptions: (option: Language, isInput: boolean) => void;
   handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   handleTranslate?: () => void;
@@ -36,8 +35,7 @@ function Container({
   expandInputOptions,
   expandOutputOptions,
   handleLanguage,
-  handleExpandInputOptions,
-  handleExpandOutputOptions,
+  handleExpand,
   addToVisibleOptions,
   handleChange,
   handleTranslate,
@@ -61,8 +59,7 @@ function Container({
             expandInputOptions={expandInputOptions}
             expandOutputOptions={expandOutputOptions}
             handleLanguage={handleLanguage}
-            handleExpandInputOptions={handleExpandInputOptions}
-            handleExpandOutputOptions={handleExpandOutputOptions}
+            handleExpand={handleExpand}
             addToVisibleOptions={addToVisibleOptions}
           />
 

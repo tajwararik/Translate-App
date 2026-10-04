@@ -43,11 +43,10 @@ function App() {
     else setLanguageCode((prev) => ({ ...prev, output: code }));
   };
 
-  const handleExpandInputOptions = () =>
-    setExpand((prev) => ({ ...prev, input: !prev.input }));
-
-  const handleExpandOutputOptions = () =>
-    setExpand((prev) => ({ ...prev, output: !prev.output }));
+  const handleExpand = (isInput: Boolean) => {
+    if (isInput) setExpand((prev) => ({ ...prev, input: !prev.input }));
+    else setExpand((prev) => ({ ...prev, output: !prev.output }));
+  };
 
   const addToVisibleOptions = (option: Language, isInput: boolean) => {
     if (isInput) {
@@ -153,7 +152,7 @@ function App() {
           translatingText={text.inputText}
           expandInputOptions={expand.input}
           handleLanguage={handleLanguage}
-          handleExpandInputOptions={handleExpandInputOptions}
+          handleExpand={handleExpand}
           addToVisibleOptions={addToVisibleOptions}
           handleChange={handleChange}
           handleTranslate={handleTranslate}
@@ -168,7 +167,7 @@ function App() {
           translatedText={text.outputText}
           expandOutputOptions={expand.output}
           handleLanguage={handleLanguage}
-          handleExpandOutputOptions={handleExpandOutputOptions}
+          handleExpand={handleExpand}
           addToVisibleOptions={addToVisibleOptions}
           handleSwapLanguages={swapLanguages}
           handleListen={handleListen}

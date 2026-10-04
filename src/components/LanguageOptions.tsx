@@ -10,8 +10,7 @@ function LanguageOptions({
   expandInputOptions,
   expandOutputOptions,
   handleLanguage,
-  handleExpandInputOptions,
-  handleExpandOutputOptions,
+  handleExpand,
   addToVisibleOptions,
 }: ContainerProps) {
   const remainingLanguages = LanguageData.filter(
@@ -46,7 +45,7 @@ function LanguageOptions({
         <Expand
           style={{ color: "#d2d5da", cursor: "pointer" }}
           onClick={
-            isInput ? handleExpandInputOptions : handleExpandOutputOptions
+            isInput ? () => handleExpand(isInput) : () => handleExpand(isInput)
           }
         />
 
