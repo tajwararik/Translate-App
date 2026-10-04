@@ -25,8 +25,10 @@ function App() {
     outputOptions: LanguageData.slice(0, 3),
   });
 
-  const [expandInputOptions, setExpandInputOptions] = useState(false);
-  const [expandOutputOptions, setExpandOutputOptions] = useState(false);
+  const [expand, setExpand] = useState({
+    input: false,
+    output: false,
+  });
 
   const [translatingText, setTranslatingText] = useState<string>(
     "Hello, how are you?",
@@ -41,10 +43,11 @@ function App() {
     else setLanguage((prev) => ({ ...prev, output: code }));
   };
 
-  const handleExpandInputOptions = () => setExpandInputOptions((prev) => !prev);
+  const handleExpandInputOptions = () =>
+    setExpand((prev) => ({ ...prev, input: !prev.input }));
 
   const handleExpandOutputOptions = () =>
-    setExpandOutputOptions((prev) => !prev);
+    setExpand((prev) => ({ ...prev, output: !prev.output }));
 
   const addToVisibleOptions = (option: Language, isInput: boolean) => {
     if (isInput) {
@@ -57,7 +60,7 @@ function App() {
       }));
 
       setLanguage((prev) => ({ ...prev, input: option.code }));
-      setExpandInputOptions((prev) => !prev);
+      setExpand((prev) => ({ ...prev, input: !prev.input }));
     } else {
       setVisibleOptions((prev: Option) => ({
         ...prev,
@@ -68,7 +71,7 @@ function App() {
       }));
 
       setLanguage((prev) => ({ ...prev, output: option.code }));
-      setExpandOutputOptions((prev) => !prev);
+      setExpand((prev) => ({ ...prev, output: !prev.output }));
     }
   };
 
@@ -142,7 +145,7 @@ function App() {
           inputLanguage={language.input}
           visibleOptions={visibleOptions.inputOptions}
           translatingText={translatingText}
-          expandInputOptions={expandInputOptions}
+          expandInputOptions={expand.input}
           handleLanguage={handleLanguage}
           handleExpandInputOptions={handleExpandInputOptions}
           addToVisibleOptions={addToVisibleOptions}
@@ -157,7 +160,7 @@ function App() {
           outputLanguage={language.output}
           visibleOptions={visibleOptions.outputOptions}
           translatedText={translatedText}
-          expandOutputOptions={expandOutputOptions}
+          expandOutputOptions={expand.output}
           handleLanguage={handleLanguage}
           handleExpandOutputOptions={handleExpandOutputOptions}
           addToVisibleOptions={addToVisibleOptions}
