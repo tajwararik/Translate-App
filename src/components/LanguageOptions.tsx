@@ -1,18 +1,18 @@
-import type { ContainerProps } from "./Container";
+import { useContext } from "react";
+import type { ContainerProps } from "../types";
 import { LanguageData } from "../data/LanguageData";
 import Expand from "../../resources/Expand_down.svg?react";
+import { LanguageContext } from "../App";
 
 function LanguageOptions({
   isInput,
-  inputLanguage,
-  outputLanguage,
   visibleOptions,
   expandInputOptions,
   expandOutputOptions,
-  handleLanguage,
-  handleExpand,
-  addToVisibleOptions,
 }: ContainerProps) {
+  const { languageCode, handleLanguage, handleExpand, addToVisibleOptions } =
+    useContext(LanguageContext);
+
   const remainingLanguages = LanguageData.filter(
     (language) =>
       !visibleOptions.some((option) => option.code === language.code),
@@ -31,9 +31,9 @@ function LanguageOptions({
             }}
             onClick={() => handleLanguage(language.code, isInput)}
             className={
-              isInput === true && inputLanguage === language.code
+              isInput === true && languageCode.input === language.code
                 ? "selected"
-                : isInput === false && outputLanguage === language.code
+                : isInput === false && languageCode.output === language.code
                   ? "selected"
                   : ""
             }
