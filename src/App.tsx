@@ -1,24 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
+import type {
+  Language,
+  Option,
+  LanguageCode,
+  Expand,
+  Text,
+  LanguageContextType,
+} from "./types";
 import { LanguageData } from "./data/LanguageData";
 import Logo from "../resources/logo.svg";
 import Container from "./components/Container";
 import "./App.css";
 
-export type Language = {
-  name: string;
-  code: string;
-};
-
-type Option = {
-  inputOptions: Language[];
-  outputOptions: Language[];
-};
+export const LanguageContext = createContext<LanguageContextType>({
+  languageCode: {
+    input: "",
+    output: "",
+  },
+  handleLanguage: () => {},
+  handleExpand: () => {},
+  addToVisibleOptions: () => {},
+});
 
 function App() {
-  const [languageCode, setLanguageCode] = useState<{
-    input: string;
-    output: string;
-  }>({
+  const [languageCode, setLanguageCode] = useState<LanguageCode>({
     input: "en",
     output: "fr",
   });
@@ -28,12 +33,12 @@ function App() {
     outputOptions: LanguageData.slice(0, 3),
   });
 
-  const [expand, setExpand] = useState<{ input: boolean; output: boolean }>({
+  const [expand, setExpand] = useState<Expand>({
     input: false,
     output: false,
   });
 
-  const [text, setText] = useState<{ inputText: string; outputText: string }>({
+  const [text, setText] = useState<Text>({
     inputText: "Hello, how are you?",
     outputText: "Bonjour, comment allez-vous?",
   });
@@ -43,7 +48,7 @@ function App() {
     else setLanguageCode((prev) => ({ ...prev, output: code }));
   };
 
-  const handleExpand = (isInput: Boolean) => {
+  const handleExpand = (isInput: boolean) => {
     if (isInput) setExpand((prev) => ({ ...prev, input: !prev.input }));
     else setExpand((prev) => ({ ...prev, output: !prev.output }));
   };
@@ -145,34 +150,35 @@ function App() {
     <>
       <img src={Logo} alt="Logo" className="logo" />
       <main>
-        <Container
-          isInput={true}
-          inputLanguage={languageCode.input}
-          visibleOptions={visibleOptions.inputOptions}
-          translatingText={text.inputText}
-          expandInputOptions={expand.input}
-          handleLanguage={handleLanguage}
-          handleExpand={handleExpand}
-          addToVisibleOptions={addToVisibleOptions}
-          handleChange={handleChange}
-          handleTranslate={handleTranslate}
-          handleListen={handleListen}
-          handleCopy={() => handleCopy(text.inputText)}
-        />
+        <LanguageContext
+          value={{
+            languageCode,
+            handleLanguage,
+            handleExpand,
+            addToVisibleOptions,
+          }}
+        >
+          <Container
+            isInput={true}
+            visibleOptions={visibleOptions.inputOptions}
+            translatingText={text.inputText}
+            expandInputOptions={expand.input}
+            handleChange={handleChange}
+            handleTranslate={handleTranslate}
+            handleListen={handleListen}
+            handleCopy={() => handleCopy(text.inputText)}
+          />
 
-        <Container
-          isInput={false}
-          outputLanguage={languageCode.output}
-          visibleOptions={visibleOptions.outputOptions}
-          translatedText={text.outputText}
-          expandOutputOptions={expand.output}
-          handleLanguage={handleLanguage}
-          handleExpand={handleExpand}
-          addToVisibleOptions={addToVisibleOptions}
-          handleSwapLanguages={swapLanguages}
-          handleListen={handleListen}
-          handleCopy={() => handleCopy(text.outputText)}
-        />
+          <Container
+            isInput={false}
+            visibleOptions={visibleOptions.outputOptions}
+            translatedText={text.outputText}
+            expandOutputOptions={expand.output}
+            handleSwapLanguages={swapLanguages}
+            handleListen={handleListen}
+            handleCopy={() => handleCopy(text.outputText)}
+          />
+        </LanguageContext>
       </main>
     </>
   );
