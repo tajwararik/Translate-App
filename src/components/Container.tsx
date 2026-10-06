@@ -1,42 +1,17 @@
-import type React from "react";
-import type { Language } from "../App";
+import type { ContainerProps } from "../types";
 import Listen from "../../resources/sound_max_fill.svg";
 import Copy from "../../resources/Copy.svg";
 import SortAlfa from "../../resources/Sort_alfa.svg";
 import swapOptions from "../../resources/Horizontal_top_left_main.svg";
 import LanguageOptions from "./LanguageOptions";
 
-export type ContainerProps = {
-  isInput: boolean;
-  inputLanguage?: string;
-  outputLanguage?: string;
-  visibleOptions: Language[];
-  translatingText?: string;
-  translatedText?: string;
-  expandInputOptions?: boolean;
-  expandOutputOptions?: boolean;
-  handleLanguage: (code: string, isInput: boolean) => void;
-  handleExpand: (isInput: boolean) => void;
-  addToVisibleOptions: (option: Language, isInput: boolean) => void;
-  handleChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
-  handleTranslate?: () => void;
-  handleSwapLanguages?: () => void;
-  handleListen?: (isInput: boolean) => void;
-  handleCopy?: () => void;
-};
-
 function Container({
   isInput,
-  inputLanguage,
-  outputLanguage,
   visibleOptions,
   translatingText,
   translatedText,
   expandInputOptions,
   expandOutputOptions,
-  handleLanguage,
-  handleExpand,
-  addToVisibleOptions,
   handleChange,
   handleTranslate,
   handleSwapLanguages,
@@ -53,14 +28,9 @@ function Container({
 
           <LanguageOptions
             isInput={isInput}
-            inputLanguage={inputLanguage}
-            outputLanguage={outputLanguage}
             visibleOptions={visibleOptions}
             expandInputOptions={expandInputOptions}
             expandOutputOptions={expandOutputOptions}
-            handleLanguage={handleLanguage}
-            handleExpand={handleExpand}
-            addToVisibleOptions={addToVisibleOptions}
           />
 
           {isInput === false ? (
