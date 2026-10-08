@@ -21,8 +21,8 @@ function Container({
   return (
     <section>
       <div>
-        <div style={{ paddingLeft: isInput === false ? "0" : "10px" }}>
-          {isInput === true ? (
+        <div style={{ paddingLeft: !isInput ? "0" : "10px" }}>
+          {isInput ? (
             <p style={{ paddingRight: "15px" }}>Detect Language</p>
           ) : null}
 
@@ -33,7 +33,7 @@ function Container({
             expandOutputOptions={expandOutputOptions}
           />
 
-          {isInput === false ? (
+          {!isInput ? (
             <img
               src={swapOptions}
               alt="swap options"
@@ -52,13 +52,13 @@ function Container({
           name="input-field"
           rows={6}
           maxLength={500}
-          value={isInput === true ? translatingText : translatedText}
+          value={isInput ? translatingText : translatedText}
           onChange={handleChange}
-          readOnly={isInput === false}
+          readOnly={!isInput}
         ></textarea>
       </form>
 
-      <p style={{ visibility: isInput === true ? "visible" : "hidden" }}>
+      <p style={{ visibility: isInput ? "visible" : "hidden" }}>
         {translatingText?.length}/500
       </p>
 
@@ -73,7 +73,7 @@ function Container({
           <img src={Copy} alt="copy" className="icons" onClick={handleCopy} />
         </div>
 
-        {isInput === true ? (
+        {isInput ? (
           <div className="translate-button" onClick={handleTranslate}>
             <img src={SortAlfa} alt="character" />
             <p>Translate</p>

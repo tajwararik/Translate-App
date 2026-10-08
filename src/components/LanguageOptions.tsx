@@ -24,16 +24,16 @@ function LanguageOptions({
           <span
             key={language.code}
             style={{
-              paddingLeft: index === 0 && isInput === false ? "10px" : "12px",
-              marginLeft: index === 0 && isInput === false ? "0" : "5px",
+              paddingLeft: index === 0 && !isInput ? "10px" : "12px",
+              marginLeft: index === 0 && !isInput ? "0" : "5px",
               paddingInline: index === 2 ? "4px" : "12px",
               marginRight: index === 2 ? "0" : "5px",
             }}
             onClick={() => handleLanguage(language.code, isInput)}
             className={
-              isInput === true && languageCode.input === language.code
+              isInput && languageCode.input === language.code
                 ? "selected"
-                : isInput === false && languageCode.output === language.code
+                : !isInput && languageCode.output === language.code
                   ? "selected"
                   : ""
             }
