@@ -6,21 +6,28 @@ import { LanguageContext } from "../App";
 
 function LanguageOptions({
   isInput,
-  visibleOptions,
   expandInputOptions,
   expandOutputOptions,
 }: ContainerProps) {
-  const { languageCode, handleLanguage, handleExpand, addToVisibleOptions } =
-    useContext(LanguageContext);
+  const {
+    languageCode,
+    visibleOptions,
+    handleLanguage,
+    handleExpand,
+    addToVisibleOptions,
+  } = useContext(LanguageContext);
+
+  const options = isInput
+    ? visibleOptions.inputOptions
+    : visibleOptions.outputOptions;
 
   const remainingLanguages = LanguageData.filter(
-    (language) =>
-      !visibleOptions.some((option) => option.code === language.code),
+    (language) => !options.some((option) => option.code === language.code),
   );
   return (
     <>
       <div className="language-row">
-        {visibleOptions.map((language, index) => (
+        {options.map((language, index) => (
           <span
             key={language.code}
             style={{

@@ -17,6 +17,10 @@ export const LanguageContext = createContext<LanguageContextType>({
     input: "",
     output: "",
   },
+  visibleOptions: {
+    inputOptions: [],
+    outputOptions: [],
+  },
   handleLanguage: () => {},
   handleExpand: () => {},
   addToVisibleOptions: () => {},
@@ -153,6 +157,7 @@ function App() {
         <LanguageContext
           value={{
             languageCode,
+            visibleOptions,
             handleLanguage,
             handleExpand,
             addToVisibleOptions,
@@ -160,7 +165,6 @@ function App() {
         >
           <Container
             isInput={true}
-            visibleOptions={visibleOptions.inputOptions}
             translatingText={text.inputText}
             expandInputOptions={expand.input}
             handleChange={handleChange}
@@ -171,7 +175,6 @@ function App() {
 
           <Container
             isInput={false}
-            visibleOptions={visibleOptions.outputOptions}
             translatedText={text.outputText}
             expandOutputOptions={expand.output}
             handleSwapLanguages={swapLanguages}

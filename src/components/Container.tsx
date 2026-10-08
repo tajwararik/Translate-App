@@ -7,7 +7,6 @@ import LanguageOptions from "./LanguageOptions";
 
 function Container({
   isInput,
-  visibleOptions,
   translatingText,
   translatedText,
   expandInputOptions,
@@ -28,7 +27,6 @@ function Container({
 
           <LanguageOptions
             isInput={isInput}
-            visibleOptions={visibleOptions}
             expandInputOptions={expandInputOptions}
             expandOutputOptions={expandOutputOptions}
           />

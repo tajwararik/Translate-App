@@ -25,6 +25,7 @@ export type Text = {
 
 export type LanguageContextType = {
   languageCode: LanguageCode;
+  visibleOptions: Option;
   handleLanguage: (code: string, isInput: boolean) => void;
   handleExpand: (isInput: boolean) => void;
   addToVisibleOptions: (option: Language, isInput: boolean) => void;
@@ -32,7 +33,6 @@ export type LanguageContextType = {
 
 export type ContainerProps = {
   isInput: boolean;
-  visibleOptions: Language[];
   translatingText?: string;
   translatedText?: string;
   expandInputOptions?: boolean;
